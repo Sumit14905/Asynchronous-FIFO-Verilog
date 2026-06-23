@@ -1,10 +1,10 @@
 # Asynchronous FIFO 
 
-An Asynchronous FIFO (First-In First-Out) is a hardware memory buffer used to safely transfer data between two different clock domains, where the write clock and read clock are not the same and are not synchronized.
+* An Asynchronous FIFO (First-In First-Out) is a hardware memory buffer used to safely transfer data between two different clock domains, where the write clock and  clock are not the same and are not synchronized.
 
-In simple terms, it acts like a data bridge between two independent systems running at different speeds or clocks. Data is written into the FIFO in one clock domain (write domain) and read out in another clock domain (read domain), while preserving the order of data.
+* In simple terms, it acts like a data bridge between two independent systems running at different speeds or clocks. Data is written into the FIFO in one clock domain (write domain) and read out in another clock domain (read domain), while preserving the order of data.
 
-Unlike a synchronous FIFO (which uses a single clock), an asynchronous FIFO must handle clock domain crossing (CDC) issues. This is done using techniques like:
+* Unlike a synchronous FIFO (which uses a single clock), an asynchronous FIFO must handle clock domain crossing (CDC) issues. This is done using techniques like:
 
 Dual clock domains
 Gray code pointers (for safe synchronization)
@@ -86,7 +86,7 @@ The design was verified using the **AMD Xilinx Vivado Behavioral Simulator** wit
 ### Condition 3: Memory Underflow Verification (FIFO Empty)
 * **Behavior:** Write operations are frozen (`winc = 0`), and the read path is held high (`rinc = 1`) to systematically flush all outstanding records from the structure.
 * **Observation:** The moment the final unique byte leaves the output bus, the internal Gray
-* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
+* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/waveform_async_fifo/wf3.png?raw=true)
 
 
 ## Conclusion
