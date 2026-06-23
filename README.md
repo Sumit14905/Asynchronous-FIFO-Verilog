@@ -81,7 +81,7 @@ The design was verified using the **AMD Xilinx Vivado Behavioral Simulator** wit
 ### Condition 2: Memory Overflow Verification (FIFO Full)
 * **Behavior:** The read enable signal (`rinc`) is pulled to `0` while write transactions (`winc = 1`) run uninterrupted to flood the pipeline.
 * **Observation:** As soon as the internal address space fills up completely to its maximum depth ($\text{Depth} = 16$), the hardware instantly asserts the **`wfull` flag**. This safety signal prevents further writes, blocking incoming transitions and protecting existing data from corruption.
-* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
+* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/waveform_async_fifo/wf2.png?raw=true)
 
 ### Condition 3: Memory Underflow Verification (FIFO Empty)
 * **Behavior:** Write operations are frozen (`winc = 0`), and the read path is held high (`rinc = 1`) to systematically flush all outstanding records from the structure.
