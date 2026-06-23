@@ -15,7 +15,7 @@ Synchronizers (to reduce metastability risks)
 
 # System Architecture
 
-
+![Async FIFO](https://raw.githubusercontent.com/USERNAME/REPO/main/docs/fifo.png)
 
 ## Memory Core
 
