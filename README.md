@@ -15,7 +15,7 @@ Synchronizers (to reduce metastability risks)
 
 # System Architecture
 
-![Async FIFO](https://raw.githubusercontent.com/USERNAME/REPO/main/docs/fifo.png)
+![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
 
 ## Memory Core
 
@@ -68,6 +68,27 @@ The EMPTY flag indicates that no valid data is available for reading. It is asse
 The FULL flag indicates that the FIFO memory is completely occupied and cannot accept new data. It is asserted when the write pointer reaches the read pointer position after wrapping around the memory depth. This condition ensures that no new write operation occurs until space is freed by a read operation.
 
 Both flags are evaluated in their respective clock domains using Gray-coded pointer comparisons to avoid errors caused by clock domain crossing and multi-bit transitions.
+
+## Waveform Description 
+
+The design was verified using the **AMD Xilinx Vivado Behavioral Simulator** with a testbench driving asymmetrical clock frequencies: **`wclk` at 100 MHz (10ns period)** and **`rclk` at 71.4 MHz (14ns period)**.
+
+### Condition 1: Normal Back-to-Back Operations
+* **Behavior:** Following an active-low reset sequence, `winc` asserts to push a burst of randomized data strings (`24`, `81`, `09`, `63`, etc.) into the memory array.
+* **Observation:** Since `rinc` is active simultaneously, data is streamed out of the memory block sequentially Because the read clock runs slower than the write clock, data builds up slightly, but flags stay low because equilibrium is maintained without crossing boundaries.
+* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
+
+### Condition 2: Memory Overflow Verification (FIFO Full)
+* **Behavior:** The read enable signal (`rinc`) is pulled to `0` while write transactions (`winc = 1`) run uninterrupted to flood the pipeline.
+* **Observation:** As soon as the internal address space fills up completely to its maximum depth ($\text{Depth} = 16$), the hardware instantly asserts the **`wfull` flag**. This safety signal prevents further writes, blocking incoming transitions and protecting existing data from corruption.
+* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
+
+### Condition 3: Memory Underflow Verification (FIFO Empty)
+* **Behavior:** Write operations are frozen (`winc = 0`), and the read path is held high (`rinc = 1`) to systematically flush all outstanding records from the structure.
+* **Observation:** The moment the final unique byte leaves the output bus, the internal Gray
+* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
+
+
 ## Conclusion
 
 The design and implementation of the asynchronous FIFO were successful, demonstrating reliable data storage and retrieval between asynchronous clock domains. The use of gray code counters ensured proper synchronization, and the module's behavior in full and empty conditions was as expected. The testbench validated the FIFO's functionality across different scenarios, proving the design's correctness and efficiency.
