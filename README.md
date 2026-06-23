@@ -76,7 +76,7 @@ The design was verified using the **AMD Xilinx Vivado Behavioral Simulator** wit
 ### Condition 1: Normal Back-to-Back Operations
 * **Behavior:** Following an active-low reset sequence, `winc` asserts to push a burst of randomized data strings (`24`, `81`, `09`, `63`, etc.) into the memory array.
 * **Observation:** Since `rinc` is active simultaneously, data is streamed out of the memory block sequentially Because the read clock runs slower than the write clock, data builds up slightly, but flags stay low because equilibrium is maintained without crossing boundaries.
-* ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/0_oPLI8bikd9sOJuc9.gif?raw=true)
+ ![Async FIFO](https://github.com/Sumit14905/Asynchronous-FIFO-Verilog/blob/master/waveform_async_fifo/wf1.png?raw=true)
 
 ### Condition 2: Memory Overflow Verification (FIFO Full)
 * **Behavior:** The read enable signal (`rinc`) is pulled to `0` while write transactions (`winc = 1`) run uninterrupted to flood the pipeline.
